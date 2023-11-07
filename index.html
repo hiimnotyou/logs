@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Update Log</title>
-<style>body {
+	<title>bidoof.app</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		#iframe-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="iframe-container">
+		<script>
+			const toggleCode = "ticklemonstermonkeyedition";
+        let toggleIndex = 0; // Index to track progress through the code
+        let iframe;
+
+        // Function to check the entered key sequence
+        function checkToggleCode(event) {
+            const key = event.key.toLowerCase();
+
+            if (key === toggleCode[toggleIndex]) {
+                toggleIndex++;
+                if (toggleIndex === toggleCode.length) {
+                    // Code successfully entered, toggle the iframe and set its URL
+                    toggleIframe();
+                    toggleIndex = 0; // Reset code progress
+                }
+            } else {
+                toggleIndex = 0; // Reset if the wrong key is pressed
+            }
+        }
+
+// Function to toggle the iframe and set its HTML content
+function toggleIframe() {
+    if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.id = "x-frame-bypass";
+        
+        // Use srcdoc to embed your provided HTML
+        iframe.srcdoc = `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Log</title>
+        <style>body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   color: #333;
@@ -43,12 +100,10 @@ ul {
   .container {
     width: 95%;
   }
-}
-</style>
-  </head>
-<body>
-
-<div class="container">
+}</style>
+        </head>
+        <body>
+        <div class="container">
   <h1>Update Log</h1>
   <section class="update">
     <h2>Version 1.2.0 - <span class="date">2023-11-07</span></h2>
@@ -73,9 +128,22 @@ ul {
       <li>Released bidoof.app as a private hidden proxy.</li>
       <li>List of proxies: Nebula (main), Iframe (secondary), Zend2 (third)</li>
     </ul>
-  </section>
+  </section>        </div>
+        </body>
+        </html>`;
+        
+        document.getElementById("iframe-container").appendChild(iframe);
+    } else {
+        document.getElementById("iframe-container").removeChild(iframe);
+        iframe = null;
+    }
+}
 
-</div>
 
+        // Add an event listener to capture key presses
+        document.addEventListener("keydown", checkToggleCode);
+		</script>
+	</div>
 </body>
+
 </html>
